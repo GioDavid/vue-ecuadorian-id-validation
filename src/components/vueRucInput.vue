@@ -36,6 +36,9 @@
       }
     },
     methods: {
+      /**
+       * Calls the validation method of the validator element, passing the identification to be validate.
+       */
       validate () {
         this.$refs.validator.validate(this.identification)
       }

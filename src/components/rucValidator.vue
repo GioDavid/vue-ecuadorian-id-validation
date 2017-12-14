@@ -28,7 +28,7 @@
     },
     methods: {
       /**
-       * Verify if the ruc is correct according to the ecuadorian id verification.
+       * Verify if the ruc is correct according to the ecuadorian id verification and it's length.
        * @param {Object} values The value to validate. May be any type depending on the validation logic.
        * @fireEvent isValidChanged when the the identification was validated.
        */
@@ -72,7 +72,7 @@
       /**
        * Make a list with all the numbers contained in the identification.
        * @param {String} value to split.
-       * @return {Boolean} true if `values` is valid.
+       * @return {Array} the array with all the numbers contained in the identification.
        */
       _splitIdentification: function (identification) {
         var numbers = (identification) ? identification.split('') : []
@@ -82,7 +82,7 @@
       /**
        * validates that the business has at least one business.
        * @param {Number} identification.
-       * @return {Boolean} true if `values` is valid.
+       * @return {Boolean} true if total number of businesses are no zero.
        */
       _checkBusiness (value) {
         var businessTotal = value.substring(10, 13)
@@ -92,7 +92,6 @@
       /**
        * Sets the properties necessary for the operations to validate the natural id card.
        * @param {String} type to be set for a natural person id or natural person ruc.
-       * @return {Boolean} true if `values` is valid.
        */
       _setNaturalPersonProperties (type) {
         this.type = type
@@ -104,7 +103,6 @@
 
       /**
        * Sets the properties necessary for the operations to validate the public ruc card.
-       * @return {Boolean} true if `values` is valid.
        */
       _setPublicRucProperties () {
         this.type = 'public_ruc'
@@ -115,9 +113,10 @@
       },
 
       /**
-       * this function verify if an ecuadorian idCard is correct.
+       * this function verify that the result of the validation operations of the idCard with the verifyNumber contained
+       * in the list, in this case the 10th digit are equal
        * @param {Array} list of the numbers contained in the ecuadorian idCard.
-       * @return {Boolean} true if `values` is valid.
+       * @return {Boolean} true if the result of the operation is equal to the 10th digit.
        */
       _getVerifyTotal (digits) {
         var verifyNumber = digits[9]
@@ -135,7 +134,7 @@
       /**
        * Verify if the idCard is correct according to the ecuadorian id verification.
        * @param {Object} values The value to validate. May be any type depending on the validation logic.
-       * @return {Boolean} true if `values` is valid.
+       * @return {Boolean} true if `idCard` is valid.
        */
       validateIdCard (idcard) {
         var id = String(idcard)
@@ -152,14 +151,13 @@
       /**
        * Verify if the public identification is correct according to the ecuadorian verification.
        * @param {Object} values The value to validate. May be any type depending on the validation logic.
-       * @return {Boolean} true if `values` is valid.
+       * @return {Boolean} publicCard if `values` is valid.
        */
-      validatePublicCard (value) {
-        var id = String(value)
+      validatePublicCard (publicCard) {
+        var id = String(publicCard)
         var province = id.substring(0, 2)
-        // var thirdNumber = id.substring(2, 3)
         if (this._between(province, this._minProvince, this._maxProvince)) {
-          var digits = this._splitIdentification(value)
+          var digits = this._splitIdentification(publicCard)
           return this._getVerifyPublicIdentificationTotal(digits)
         } else {
           return false
@@ -167,9 +165,10 @@
       },
 
       /**
-       * this function verify if an ecuadorian idCard is correct.
+       * This function verify that the result of the validation operations of ecuadorian public identification with the
+       * verifyNumber contained in the list, in this case the 9h digit are equal
        * @param {Array} list of the numbers contained in the ecuadorian idCard.
-       * @return {Boolean} true if `values` is valid.
+       * @return {Boolean} true if the result of the operation is equal to the 9th digit.
        */
       _getVerifyPublicIdentificationTotal (digits) {
         var verifyNumber = digits[8]
@@ -184,7 +183,6 @@
 
       /**
        * Sets the properties necessary for the operations to validate the juridical or foreign id card.
-       * @return {Boolean} true if `values` is valid.
        */
       _setJuridicalProperties () {
         this.type = 'juridical_foreign_ruc'
@@ -197,14 +195,13 @@
       /**
        * Verify if the juridicial or foreign identification is correct according to the ecuadorian verification.
        * @param {Object} values The value to validate. May be any type depending on the validation logic.
-       * @return {Boolean} true if `values` is valid.
+       * @return {Boolean} true if `juridicaForeignCard` is valid.
        */
-      validateJuridicalForeignCard (value) {
-        var id = String(value)
+      validateJuridicalForeignCard (juridicaForeignCard) {
+        var id = String(juridicaForeignCard)
         var province = id.substring(0, 2)
-        // var thirdNumber = id.substring(2, 3)
         if (this._between(province, this._minProvince, this._maxProvince)) {
-          var digits = this._splitIdentification(value)
+          var digits = this._splitIdentification(juridicaForeignCard)
           return this._getVerifyJuridicalTotal(digits)
         } else {
           return false
@@ -212,9 +209,10 @@
       },
 
       /**
-       * This function verify if an ecuadorian juridical or foreign is correct.
+       * This function verify that the result of the validation operations of ecuadorian juridical with the verifyNumber contained
+       * in the list, in this case the 10th digit are equal
        * @param {Array} list of the numbers contained in the ecuadorian idCard.
-       * @return {Boolean} true if `values` is valid.
+       * @return {Boolean} true if the result of the operation is equal to the 10th digit.
        */
       _getVerifyJuridicalTotal (digits) {
         var verifyNumber = digits[9]
@@ -230,6 +228,3 @@
   }
 </script>
 
-<style scoped>
-
-</style>
