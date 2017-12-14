@@ -6,7 +6,7 @@ import App from './App'
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
-new Vue({
+document.vm = new Vue({
   el: '#app',
   template: '<App/>',
   components: { App }
