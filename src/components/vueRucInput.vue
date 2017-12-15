@@ -1,13 +1,11 @@
 <template>
   <div id="rucContainer" class="main-container">
-    <br>
       <input class="main-container__input" type= "text"
              pattern="\d*" maxlength="13" title="Ingrese solo digitos!" v-model="identification"  v-bind:style="inputStyle"/>      <span class="highlight"></span>
       <span class="main-container__highlight"></span>
       <span class="main-container__bar"></span>
       <label class="main-container__label">{{label}}</label>
     <ruc-validator ref="validator" @isValidChanged="isValid = $event"></ruc-validator>
-    <br>
     <span class="main-container__error-message" v-if="!isValid">{{message}}</span>
   </div>
 </template>
@@ -41,21 +39,22 @@
          */
         inputStyle: {
           backgroundColor: '#fafafa',
-          borderColor: '#212121'
+          borderColor: '#212121',
+          borderBottom: '1px solid'
         },
         /**
          *  Object that contain all the style properties for the input when the input value is correct
          */
         validInputStyle: {
           backgroundColor: '#fff',
-          borderColor: '#00E676'
+          borderBottom: '2px solid #00E676'
         },
         /**
          *  Object that contain all the style properties for the input when there's an error
          */
         errorInputStyle: {
           backgroundColor: '#FFEBEE',
-          borderColor: '#B71C1C'
+          borderBottom: '2px solid #B71C1C'
         }
       }
     },
@@ -87,7 +86,7 @@
   /* INPUT ======================================= */
   .main-container__input {
     font-size:18px;
-    padding:10px 10px 10px 5px;
+    padding:10px 0px 10px 5px;
     display:block;
     width:300px;
     border:none;
