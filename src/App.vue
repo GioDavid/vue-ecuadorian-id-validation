@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="main-container">
-    <form action="/">
+    <form class="main-container__form" action="/">
       <vue-ruc-input id="rucInput" ref="rucInput"></vue-ruc-input>
     </form>
     <button class="main-container__button" @click="validate" >Validate</button>
@@ -32,6 +32,11 @@
     color: #2c3e50;
     margin-top: 60px;
     display: block;
+  }
+
+  .main-container__form {
+    padding-top: 60px;
+    padding-left: 24px;
   }
 
   .main-container__button {

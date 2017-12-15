@@ -1,11 +1,14 @@
 <template>
   <div id="rucContainer" class="main-container">
-    <label class="main-container__text main-container__label">{{label}}</label>
-    <input class="main-container__input" type= "text"
-           pattern="\d*" maxlength="13" title="Ingrese solo digitos!" v-model="identification" />
+    <br>
+      <input class="main-container__input" type= "text"
+             pattern="\d*" maxlength="13" title="Ingrese solo digitos!" v-model="identification"  v-bind:style="inputStyle"/>      <span class="highlight"></span>
+      <span class="main-container__highlight"></span>
+      <span class="main-container__bar"></span>
+      <label class="main-container__label">{{label}}</label>
     <ruc-validator ref="validator" @isValidChanged="isValid = $event"></ruc-validator>
     <br>
-    <span class="main-container__text main-container__error-message" v-if="!isValid">{{message}}</span>
+    <span class="main-container__error-message" v-if="!isValid">{{message}}</span>
   </div>
 </template>
 <script>
@@ -26,13 +29,34 @@
          */
         label: 'RUC',
         /**
-         *  error message to show.
+         *  label to display over the input.
          */
         message: 'RUC incorrecto!',
         /**
          *  boolean value use to show the error message
          */
-        isValid: true
+        isValid: true,
+        /**
+         *  Object that is going to be bind to input style
+         */
+        inputStyle: {
+          backgroundColor: '#fafafa',
+          borderColor: '#212121'
+        },
+        /**
+         *  Object that contain all the style properties for the input when the input value is correct
+         */
+        validInputStyle: {
+          backgroundColor: '#fff',
+          borderColor: '#00E676'
+        },
+        /**
+         *  Object that contain all the style properties for the input when there's an error
+         */
+        errorInputStyle: {
+          backgroundColor: '#FFEBEE',
+          borderColor: '#B71C1C'
+        }
       }
     },
     methods: {
@@ -43,40 +67,115 @@
         this.$refs.validator.validate(this.identification)
       }
     },
+    watch: {
+      // whenever isValid changes, this function will run
+      isValid: function (value) {
+        console.log(value)
+        this.inputStyle = (value) ? this.validInputStyle : this.errorInputStyle
+      }
+    },
     name: 'vueRucInput'
   }
 </script>
 <style scoped>
+  /* CONTAINER ------------------------------- */
   .main-container {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    background-color: white;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
-    display: block;
+    position:relative;
+    margin-bottom:45px;
   }
 
-  main-container__label{
-    color: #B71C1C;
-  }
-
-  .main-container__title {
-    margin: 24px;
-    color: #B71C1C;
-  }
-
+  /* INPUT ======================================= */
   .main-container__input {
-    margin-left: 24px;
+    font-size:18px;
+    padding:10px 10px 10px 5px;
+    display:block;
+    width:300px;
+    border:none;
+    border-bottom:1px solid #757575;
   }
 
-  .main-container__text {
-    margin-left: 24px;
-    margin-top: 16px;
+  .main-container__input:focus { outline:none; }
+
+  /* LABEL ======================================= */
+  .main-container__label{
+    color:#999;
+    font-size:18px;
+    font-weight:normal;
+    position:absolute;
+    pointer-events:none;
+    left:5px;
+    top:10px;
+    transition:0.2s ease all;
+    -moz-transition:0.2s ease all;
+    -webkit-transition:0.2s ease all;
+  }
+
+  /* active state */
+  .main-container__input:focus ~ .main-container__label, .main-container__input:valid ~ .main-container__label 		{
+    top:-20px;
+    font-size:14px;
+    color:#5264AE;
+  }
+
+  /* BOTTOM BARS ================================= */
+  .main-container__bar 	{ position:relative; display:block; width:300px; }
+  .main-container__bar:before, .main-container__bar:after 	{
+    content:'';
+    height:2px;
+    width:0;
+    bottom:1px;
+    position:absolute;
+    background:#5264AE;
+    transition:0.2s ease all;
+    -moz-transition:0.2s ease all;
+    -webkit-transition:0.2s ease all;
+  }
+  .main-container__bar:before {
+    left:50%;
+  }
+  .main-container__bar:after {
+    right:50%;
+  }
+
+  /* active state */
+  .main-container__input:focus ~ .main-container__bar:before, .main-container__input:focus ~ .main-container__bar:after {
+    width:50%;
+  }
+
+  /* HIGHLIGHTER ================================== */
+  .main-container__highlight {
+    position:absolute;
+    height:60%;
+    width:100px;
+    top:25%;
+    left:0;
+    pointer-events:none;
+    opacity:0.5;
+  }
+
+  /* active state */
+  .main-container__input:focus ~ .main-container__highlight {
+    -webkit-animation:inputHighlighter 0.3s ease;
+    -moz-animation:inputHighlighter 0.3s ease;
+    animation:inputHighlighter 0.3s ease;
+  }
+
+  /* ANIMATIONS ================ */
+  @-webkit-keyframes inputHighlighter {
+    from { background:#5264AE; }
+    to 	{ width:0; background:transparent; }
+  }
+  @-moz-keyframes inputHighlighter {
+    from { background:#5264AE; }
+    to 	{ width:0; background:transparent; }
+  }
+  @keyframes inputHighlighter {
+    from { background:#5264AE; }
+    to 	{ width:0; background:transparent; }
   }
 
   .main-container__error-message{
     color: #B71C1C;
   }
+
 </style>
