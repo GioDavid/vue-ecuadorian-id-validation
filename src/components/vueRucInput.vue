@@ -1,12 +1,18 @@
+<!--
+@license
+Copyright (c) 2017 David Proaño <davisxdpfr@gmail.com>. All rights reserved.
+-->
 <template>
   <div id="rucContainer" class="main-container">
       <input class="main-container__input" type= "text"
-             pattern="\d*" maxlength="13" title="Ingrese solo digitos!" v-model="identification"  v-bind:style="inputStyle"/>      <span class="highlight"></span>
+             pattern="\d*" maxlength="13" title="Ingrese solo digitos!"
+             v-bind:required="isRequired"
+             v-model="identification"  v-bind:style="inputStyle"/>
       <span class="main-container__highlight"></span>
       <span class="main-container__bar"></span>
       <label class="main-container__label">{{label}}</label>
-    <ruc-validator ref="validator" @isValidChanged="isValid = $event"></ruc-validator>
-    <span class="main-container__error-message" v-if="!isValid">{{message}}</span>
+      <span class="main-container__error-message" v-if="!isValid">{{message}}</span>
+      <ruc-validator ref="validator" @isValidChanged="isValid = $event"></ruc-validator>
   </div>
 </template>
 <script>
@@ -18,18 +24,14 @@
     },
     data () {
       return {
-        /**
-         *  identification number of a person.
-         */
+        // Identification number of a person.
         identification: '',
-        /**
-         *  title to be display near the input.
-         */
+        // Title to be display near the input.
         label: 'RUC',
         /**
          *  label to display over the input.
          */
-        message: 'RUC incorrecto!',
+        message: 'RUC incorrecto, solo se aceptan números!',
         /**
          *  boolean value use to show the error message
          */
@@ -55,7 +57,11 @@
         errorInputStyle: {
           backgroundColor: '#FFEBEE',
           borderBottom: '2px solid #B71C1C'
-        }
+        },
+        /**
+         *  Boolean to set required to if rucInput is required
+         */
+        isRequired: false
       }
     },
     methods: {
@@ -63,23 +69,25 @@
        * Calls the validation method of the validator element, passing the identification to be validate.
        */
       validate () {
+        // TODO check custom validation using setCustomValidity method in input
         this.$refs.validator.validate(this.identification)
       }
     },
+    props: ['required'],
     watch: {
       // whenever isValid changes, this function will run
       isValid: function (value) {
-        console.log(value)
         this.inputStyle = (value) ? this.validInputStyle : this.errorInputStyle
       }
     },
+
     name: 'vueRucInput'
   }
 </script>
 <style scoped>
   /* CONTAINER ------------------------------- */
   .main-container {
-    position:relative;
+    position: absolute;
     margin-bottom:45px;
   }
 
@@ -110,7 +118,7 @@
   }
 
   /* active state */
-  .main-container__input:focus ~ .main-container__label, .main-container__input:valid ~ .main-container__label 		{
+  .main-container__input:focus ~ .main-container__label, .main-container__input:valid ~ .main-container__label  		{
     top:-20px;
     font-size:14px;
     color:#5264AE;
@@ -175,6 +183,8 @@
 
   .main-container__error-message{
     color: #B71C1C;
+    position:initial;
+    width: 100%;
   }
 
 </style>

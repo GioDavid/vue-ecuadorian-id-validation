@@ -1,3 +1,7 @@
+<!--
+@license
+Copyright (c) 2017 David Proaño <davisxdpfr@gmail.com>. All rights reserved.
+-->
 <template>
 </template>
 <script>
@@ -5,8 +9,8 @@
     data () {
       return {
         /**
-         * Used to identify if the validation is going to be done to an idCard or a RUC.
-         */
+        * Used to identify if the validation is going to be done to an idCard or a RUC.
+        */
         type: 'id_card',
         /**
          * Used to verify what kind of identifier is.

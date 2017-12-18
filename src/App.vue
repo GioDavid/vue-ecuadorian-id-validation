@@ -1,7 +1,8 @@
+
 <template>
   <div id="app" class="main-container">
     <form class="main-container__form" action="/">
-      <vue-ruc-input id="rucInput" ref="rucInput"></vue-ruc-input>
+      <vue-ruc-input :required='false' id="rucInput" ref="rucInput"></vue-ruc-input>
     </form>
     <button class="main-container__button" @click="validate" >Validate</button>
   </div>
@@ -15,7 +16,6 @@
     methods: {
       validate () {
         this.$refs.rucInput.validate()
-        // return this.$.rucInput.validate()
       }
     },
     name: 'app'
@@ -23,6 +23,7 @@
 </script>
 
 <style>
+  /* CONTAINER ------------------------------- */
   .main-container {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -34,11 +35,14 @@
     display: block;
   }
 
+  /* FORM ------------------------------- */
   .main-container__form {
     padding-top: 60px;
     padding-left: 24px;
+    width: 400px;
   }
 
+  /* BUTTON ------------------------------- */
   .main-container__button {
     margin: 8px;
     margin-left: 24px;
