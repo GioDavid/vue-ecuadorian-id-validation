@@ -1,7 +1,8 @@
 # ecuadorian-id-validation
 
 > Basic ecuadorian id validation vue example using vue for a project.
-The ruc input element has a reference to the validation element to be used for validating an identification   
+The ruc input element has a reference to the validation element to be used for validating an identification.
+The use example is in App.vue file, the main components are in src/components   
 
 ## Build Setup
 

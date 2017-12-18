@@ -87,7 +87,7 @@ Copyright (c) 2017 David Proaño <davisxdpfr@gmail.com>. All rights reserved.
       }
     },
 
-    name: 'vueRucInput'
+    name: 'vue-ruc-input'
   }
 </script>
 <style scoped>

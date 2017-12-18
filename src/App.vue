@@ -2,9 +2,9 @@
 <template>
   <div id="app" class="main-container">
     <form class="main-container__form" action="/">
-      <vue-ruc-input class="main-container__ruc-input" :required='false' id="rucInput" ref="rucInput"></vue-ruc-input>
+      <vue-ruc-input class="main-container__ruc-input" :required='false' id="rucInput" ref="rucInput" @isValidChanged="isValid = $event"></vue-ruc-input>
     </form>
-    <button class="main-container__button" @click="validate" >VALIDAR</button>
+    <button class="main-container__button" @click="validate">VALIDAR</button>
   </div>
 </template>
 
@@ -13,6 +13,14 @@
 
   export default {
     components: {'vue-ruc-input': VueRucInput},
+    data () {
+      return {
+        /**
+         *  boolean value to see if the field is valid
+         */
+        isValid: true
+      }
+    },
     methods: {
       validate () {
         this.$refs.rucInput.validate()
