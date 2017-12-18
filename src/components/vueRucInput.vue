@@ -6,8 +6,8 @@ Copyright (c) 2017 David Proaño <davisxdpfr@gmail.com>. All rights reserved.
   <div id="rucContainer" class="main-container">
       <input class="main-container__input" type= "text"
              pattern="\d*" maxlength="13" title="Ingrese solo digitos!"
-             v-bind:required="isRequired"
-             v-model="identification"  v-bind:style="inputStyle"/>
+             :required="isRequired"  ref="input"
+             v-model="identification" :style="inputStyle"/>
       <span class="main-container__highlight"></span>
       <span class="main-container__bar"></span>
       <label class="main-container__label">{{label}}</label>
@@ -40,7 +40,7 @@ Copyright (c) 2017 David Proaño <davisxdpfr@gmail.com>. All rights reserved.
          *  Object that is going to be bind to input style
          */
         inputStyle: {
-          backgroundColor: '#fafafa',
+          backgroundColor: '#fff',
           borderColor: '#212121',
           borderBottom: '1px solid'
         },
@@ -77,7 +77,13 @@ Copyright (c) 2017 David Proaño <davisxdpfr@gmail.com>. All rights reserved.
     watch: {
       // whenever isValid changes, this function will run
       isValid: function (value) {
-        this.inputStyle = (value) ? this.validInputStyle : this.errorInputStyle
+        if (value) {
+          this.$refs.input.setCustomValidity('')
+          this.inputStyle = this.validInputStyle
+        } else {
+          this.$refs.input.setCustomValidity(this.message)
+          this.inputStyle = this.errorInputStyle
+        }
       }
     },
 
@@ -87,8 +93,10 @@ Copyright (c) 2017 David Proaño <davisxdpfr@gmail.com>. All rights reserved.
 <style scoped>
   /* CONTAINER ------------------------------- */
   .main-container {
-    position: absolute;
+    position: relative;
     margin-bottom:45px;
+    display: flex;
+    flex-direction: column;
   }
 
   /* INPUT ======================================= */

@@ -2,9 +2,9 @@
 <template>
   <div id="app" class="main-container">
     <form class="main-container__form" action="/">
-      <vue-ruc-input :required='false' id="rucInput" ref="rucInput"></vue-ruc-input>
+      <vue-ruc-input class="main-container__ruc-input" :required='false' id="rucInput" ref="rucInput"></vue-ruc-input>
     </form>
-    <button class="main-container__button" @click="validate" >Validate</button>
+    <button class="main-container__button" @click="validate" >VALIDAR</button>
   </div>
 </template>
 
@@ -39,14 +39,22 @@
   .main-container__form {
     padding-top: 60px;
     padding-left: 24px;
-    width: 400px;
+  }
+
+  /* RUC INPUT ------------------------------- */
+  .main-container__ruc-input {
+    width: 300px;
   }
 
   /* BUTTON ------------------------------- */
   .main-container__button {
+    display: block;
+    font-weight: 900;
     margin: 8px;
     margin-left: 24px;
     padding: 8px;
+    width: 250px;
+    height: 30px;
 
     overflow: hidden;
 
