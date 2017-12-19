@@ -110,7 +110,7 @@ Copyright (c) 2017 David Proaño <davisxdpfr@gmail.com>. All rights reserved.
        */
       _setPublicRucProperties () {
         this.type = 'public_ruc'
-        this._coefficients = ['3', '2', '7', '6', '5', '4', '3', '2']
+        this._verificationCoefficients = ['3', '2', '7', '6', '5', '4', '3', '2']
         this.thirdDigitValidator = 6
         this._minProvince = 1
         this._maxProvince = 22
@@ -177,6 +177,7 @@ Copyright (c) 2017 David Proaño <davisxdpfr@gmail.com>. All rights reserved.
       _getVerifyPublicIdentificationTotal (digits) {
         var verifyNumber = digits[8]
         var total = 0
+        console.log(this._verificationCoefficients)
         for (var i = 0; i < this._verificationCoefficients.length; i++) {
           var value = this._verificationCoefficients[i] * digits[i]
           total = total + value
